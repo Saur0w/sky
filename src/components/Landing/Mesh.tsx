@@ -218,7 +218,7 @@ export default function Mesh() {
     }, [styledScene]);
 
     return (
-        <Center position={[-3, -2.5, 0]}>
+        <Center position={[0, -2.5, 0]}>
             <group ref={group} scale={0.03}>
                 <primitive object={styledScene} />
             </group>
