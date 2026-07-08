@@ -20,8 +20,8 @@ export default function Mesh() {
     }, [scene]);
 
     return (
-        <Center>
-            <group ref={group} scale={0.015}>
+        <Center position={[-3, -2.5, 0]}>
+            <group ref={group} scale={0.03}>
                 <primitive object={scene} />
             </group>
         </Center>

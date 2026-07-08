@@ -9,7 +9,7 @@ export default function Scene() {
     return (
         <div className={styles.scene}>
             <Canvas
-                camera={{ position: [10, 0, 3], fov: 60 }}
+                camera={{ position: [0, 0, 5.5], fov: 60 }}
                 gl={{ antialias: true, alpha: true }}
             >
                 <ambientLight intensity={1.5} />
