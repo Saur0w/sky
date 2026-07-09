@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
 import { Center, useAnimations, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
-import { ASCII_TIME_UNIFORM, createAsciiUniforms, styleMaterial, AsciiUniforms } from "@/lib/Shader";
+import { createAsciiUniforms, styleMaterial, AsciiUniforms } from "@/lib/Shader";
 
 const MODEL_PATH = "/models/dandelion.glb";
 const ANIMATION_SPEED = 0.85;
@@ -39,10 +38,6 @@ export default function Mesh() {
     const { scene, animations } = useGLTF(MODEL_PATH);
     const styledScene = useMemo(() => styleScene(scene, uniforms), [scene, uniforms]);
     const { actions } = useAnimations(animations, group);
-
-    useFrame((_, delta) => {
-        ASCII_TIME_UNIFORM.value += delta;
-    });
 
     useEffect(() => {
         const playingActions = animations

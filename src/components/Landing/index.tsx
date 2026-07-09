@@ -45,7 +45,7 @@ export default function Landing() {
             duration: 1,
             ease: "power4.out",
             stagger: 0.08,
-            delay: 0.2
+            delay: 1.2
         });
     }, { scope: landingRef});
     return (
