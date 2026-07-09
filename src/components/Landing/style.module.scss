@@ -4,5 +4,39 @@
   left: 0;
   height: 100vh;
   width: 100vw;
-  background: #ececf4;
+  background: #E7E7F6;
+  overflow: hidden;
+  .overlay {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 0 30px 30px;
+    .subHead {
+      display: flex;
+      h3 {
+        font-size: 14px;
+        color: #6C4BD8;
+      }
+    }
+    .main {
+      width: 100%;
+      max-width: 1000px;
+      h1 {
+        font-family: var(--font-martian-mono), serif;
+        font-weight: 700;
+        font-size: 2.9rem;
+        line-height: 1.5;
+        letter-spacing: -0.04;
+      }
+    }
+    .textContainer {
+      width: 100%;
+      max-width: 500px;
+      p {
+        font-family: var(--font-family, 'Geist Mono'), serif;
+        color: #0D0D12;
+        font-size: 0.9rem;
+      }
+    }
+  }
 }
