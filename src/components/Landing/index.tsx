@@ -14,6 +14,39 @@ export default function Landing() {
     const subRef = useRef<HTMLHeadingElement>(null);
     const headingRef = useRef<HTMLHeadingElement>(null);
     const paraRef = useRef<HTMLParagraphElement>(null);
+
+    useGSAP(() => {
+        const maskLines = (el: HTMLElement) => {
+            const outer = SplitText.create(el, {
+                type: "lines",
+                linesClass: "line-mask",
+            });
+
+            const inner = SplitText.create(outer.lines, {
+                type: "lines",
+                linesClass: "line-content"
+            });
+
+            gsap.set(outer.lines, {
+                overflow: "hidden",
+                display: "block",
+            });
+
+            return inner.lines;
+        };
+
+        const headingLines = headingRef.current ? maskLines(headingRef.current) : [];
+        const subLines = subRef.current ? maskLines(subRef.current) : [];
+        const paraLines = paraRef.current ? maskLines(paraRef.current) : [];
+
+        gsap.from([...headingLines, ...subLines, ...paraLines], {
+            yPercent: 110,
+            duration: 1,
+            ease: "power4.out",
+            stagger: 0.08,
+            delay: 0.2
+        });
+    }, { scope: landingRef});
     return (
         <section className={styles.landing} ref={landingRef}>
             <div className={styles.canvasWrapper}>
