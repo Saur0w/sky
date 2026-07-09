@@ -9,9 +9,11 @@ export type AsciiUniforms = {
 
 const ASCII_SHADER_KEY = "ascii-dither-surface-v3";
 
-export function createAsciiUniforms(time: { value: number } = { value: 0 }): AsciiUniforms {
+export const ASCII_TIME_UNIFORM = { value: 0 };
+
+export function createAsciiUniforms(): AsciiUniforms {
     return {
-        uAsciiTime: time,
+        uAsciiTime: ASCII_TIME_UNIFORM,
         uAsciiInk: { value: new THREE.Color("#6d28d9") },
         uAsciiPaper: { value: new THREE.Color("#f3edfb") },
         uAsciiGlow: { value: new THREE.Color("#c4b5fd") },

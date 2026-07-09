@@ -5,7 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import { Center, useAnimations, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
-import { createAsciiUniforms, styleMaterial, AsciiUniforms } from "@/lib/Shader";
+import { ASCII_TIME_UNIFORM, createAsciiUniforms, styleMaterial, AsciiUniforms } from "@/lib/Shader";
 
 const MODEL_PATH = "/models/dandelion.glb";
 const ANIMATION_SPEED = 0.85;
@@ -34,16 +34,14 @@ function styleScene(scene: THREE.Group, uniforms: AsciiUniforms) {
 
 export default function Mesh() {
     const group = useRef<THREE.Group>(null);
-    const timeUniform = useMemo(() => ({ value: 0 }), []);
-    const uniforms = useMemo(() => createAsciiUniforms(timeUniform), [timeUniform]);
+    const uniforms = useMemo(() => createAsciiUniforms(), []);
 
     const { scene, animations } = useGLTF(MODEL_PATH);
     const styledScene = useMemo(() => styleScene(scene, uniforms), [scene, uniforms]);
     const { actions } = useAnimations(animations, group);
 
     useFrame((_, delta) => {
-        // eslint-disable-next-line react-hooks/immutability -- timeUniform is
-        timeUniform.value += delta;
+        ASCII_TIME_UNIFORM.value += delta;
     });
 
     useEffect(() => {
@@ -81,8 +79,8 @@ export default function Mesh() {
     }, [styledScene]);
 
     return (
-        <Center position={[0, -2.5, 0]}>
-            <group ref={group} scale={0.03}>
+        <Center position={[0, -3.5, 0]}>
+            <group ref={group} scale={0.04}>
                 <primitive object={styledScene} />
             </group>
         </Center>
