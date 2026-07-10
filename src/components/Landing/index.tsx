@@ -43,9 +43,9 @@ export default function Landing() {
         gsap.from([...headingLines, ...subLines, ...paraLines], {
             yPercent: 110,
             duration: 1,
-            ease: "power4.out",
+            ease: "power2.inOut",
             stagger: 0.08,
-            delay: 1.2
+            delay: 1.4
         });
     }, { scope: landingRef});
     return (
