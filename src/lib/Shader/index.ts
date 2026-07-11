@@ -5,7 +5,7 @@ export type AsciiUniforms = {
     uAsciiPaper: { value: THREE.Color };
     uAsciiGlow: { value: THREE.Color };
     uAsciiCellSize: { value: number };
-    uOpacity: { value: number };  
+    uOpacity: { value: number };
 };
 
 const ASCII_SHADER_KEY = "ascii-dither-surface-v7";
@@ -16,7 +16,7 @@ export function createAsciiUniforms(): AsciiUniforms {
         uAsciiPaper: { value: new THREE.Color("#f3edfb") },
         uAsciiGlow: { value: new THREE.Color("#c4b5fd") },
         uAsciiCellSize: { value: 4.0 },
-        uOpacity: { value: 0.5 },  
+        uOpacity: { value: 0.5 },
     };
 }
 
@@ -72,7 +72,7 @@ export function styleMaterial(material: THREE.Material, uniforms: AsciiUniforms)
         shader.uniforms.uAsciiGlow = uniforms.uAsciiGlow;
         shader.uniforms.uAsciiCellSize = uniforms.uAsciiCellSize;
         shader.uniforms.uAsciiHasTexture = hasTextureUniform;
-        shader.uniforms.uOpacity = uniforms.uOpacity; 
+        shader.uniforms.uOpacity = uniforms.uOpacity;
 
         shader.fragmentShader = shader.fragmentShader
             .replace("#include <common>", `#include <common>\n${ASCII_DITHER_FRAGMENT}`)
