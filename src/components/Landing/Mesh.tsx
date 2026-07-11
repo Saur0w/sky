@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import { Center, useAnimations, useGLTF } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
 import { createAsciiUniforms, styleMaterial, AsciiUniforms } from "@/lib/Shader";
@@ -80,6 +81,10 @@ export default function Mesh({ opacity = 0.5 }: MeshProps) {
             });
         };
     }, [styledScene]);
+
+    useFrame((state) => {
+        uniforms.uTime.value = state.clock.elapsedTime;
+    });
 
     return (
         <Center position={[0, -3.8, 0]}>

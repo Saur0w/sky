@@ -6,6 +6,7 @@ export type AsciiUniforms = {
     uAsciiGlow: { value: THREE.Color };
     uAsciiCellSize: { value: number };
     uOpacity: { value: number };
+    uTime: { value: number };
 };
 
 const ASCII_SHADER_KEY = "ascii-dither-surface-v7";
@@ -17,6 +18,7 @@ export function createAsciiUniforms(): AsciiUniforms {
         uAsciiGlow: { value: new THREE.Color("#c4b5fd") },
         uAsciiCellSize: { value: 4.0 },
         uOpacity: { value: 0.5 },
+        uTime: { value: 0.0 },
     };
 }
 
@@ -73,6 +75,25 @@ export function styleMaterial(material: THREE.Material, uniforms: AsciiUniforms)
         shader.uniforms.uAsciiCellSize = uniforms.uAsciiCellSize;
         shader.uniforms.uAsciiHasTexture = hasTextureUniform;
         shader.uniforms.uOpacity = uniforms.uOpacity;
+        shader.uniforms.uTime = uniforms.uTime;
+
+        shader.vertexShader = shader.vertexShader
+            .replace("#include <common>", `#include <common>\nuniform float uTime;`)
+            .replace(
+                "#include <project_vertex>",
+                `
+                vec4 mvPosition = vec4( transformed, 1.0 );
+                #ifdef USE_INSTANCING
+                    mvPosition = instanceMatrix * mvPosition;
+                #endif
+                mvPosition = modelViewMatrix * mvPosition;
+                vec4 worldPos = modelMatrix * vec4(transformed, 1.0);
+                float h = max(0.0, worldPos.y + 10.0);
+                float sway = sin(uTime * 0.8 - h * 0.1) * (h * h * 0.001);
+                mvPosition.x += sway;
+                gl_Position = projectionMatrix * mvPosition;
+                `
+            );
 
         shader.fragmentShader = shader.fragmentShader
             .replace("#include <common>", `#include <common>\n${ASCII_DITHER_FRAGMENT}`)
