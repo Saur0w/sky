@@ -58,18 +58,18 @@ export default function Landing() {
             </div>
             <div className={styles.overlay}>
                 <div className={styles.subHead}>
-                    <h3 ref={subRef}>PORTFOLIO CONTEXT // 2026 — INDEX: 07</h3>
+                    <h3 ref={subRef}>SAUROW // WEBGL LABS — VOL. 01</h3>
                 </div>
 
                 <div className={styles.main}>
                     <h1 ref={headingRef}>
-                        See the market moves long before they become breaking news headlines.
+                        Digital botany rendered through real-time halftone dithering.
                     </h1>
                 </div>
 
                 <div className={styles.textContainer}>
                     <p ref={paraRef}>
-                        A collective balance of creative brutalism, typographical density control, and interactive graphic shaders.
+                        Exploring the intersection of organic 3D forms and retro-digital shaders. A custom ASCII dither effect applied to a dandelion model.
                     </p>
                 </div>
             </div>
