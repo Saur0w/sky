@@ -5,7 +5,10 @@ import styles from "./style.module.scss";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import dynamic from "next/dynamic";
-const Scene = dynamic(() => import("./Scene"), { ssr: false });
+const Scene = dynamic(() => 
+    import("./Scene"), { 
+        ssr: false 
+    });
 import { SplitText } from "gsap/SplitText";
 
 gsap.registerPlugin(useGSAP, SplitText);

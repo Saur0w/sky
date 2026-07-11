@@ -5,9 +5,10 @@ export type AsciiUniforms = {
     uAsciiPaper: { value: THREE.Color };
     uAsciiGlow: { value: THREE.Color };
     uAsciiCellSize: { value: number };
+    uOpacity: { value: number };  
 };
 
-const ASCII_SHADER_KEY = "ascii-dither-surface-v6";
+const ASCII_SHADER_KEY = "ascii-dither-surface-v7";
 
 export function createAsciiUniforms(): AsciiUniforms {
     return {
@@ -15,6 +16,7 @@ export function createAsciiUniforms(): AsciiUniforms {
         uAsciiPaper: { value: new THREE.Color("#f3edfb") },
         uAsciiGlow: { value: new THREE.Color("#c4b5fd") },
         uAsciiCellSize: { value: 4.0 },
+        uOpacity: { value: 0.5 },  
     };
 }
 
@@ -24,6 +26,7 @@ uniform vec3 uAsciiPaper;
 uniform vec3 uAsciiGlow;
 uniform float uAsciiHasTexture;
 uniform float uAsciiCellSize;
+uniform float uOpacity;  
 
 float asciiHash(vec2 p) {
     return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
@@ -51,6 +54,8 @@ vec4 asciiDitherColor(vec3 sourceColor, float sourceAlpha) {
     vec3 finalColor = mix(paper, uAsciiInk, inkAmount);
     float flatAlpha = inkAmount * 0.6;
     float finalAlpha = mix(flatAlpha, sourceAlpha, uAsciiHasTexture);
+    
+    finalAlpha *= uOpacity;
 
     return vec4(finalColor, finalAlpha);
 }
@@ -67,6 +72,7 @@ export function styleMaterial(material: THREE.Material, uniforms: AsciiUniforms)
         shader.uniforms.uAsciiGlow = uniforms.uAsciiGlow;
         shader.uniforms.uAsciiCellSize = uniforms.uAsciiCellSize;
         shader.uniforms.uAsciiHasTexture = hasTextureUniform;
+        shader.uniforms.uOpacity = uniforms.uOpacity; 
 
         shader.fragmentShader = shader.fragmentShader
             .replace("#include <common>", `#include <common>\n${ASCII_DITHER_FRAGMENT}`)
@@ -86,12 +92,9 @@ export function styleMaterial(material: THREE.Material, uniforms: AsciiUniforms)
         (styled as THREE.MeshStandardMaterial).metalness = 0.02;
     }
 
-    if (!hasTexture) {
-        styled.transparent = true;
-        styled.depthWrite = false;
-    } else if (styled.transparent) {
-        styled.alphaTest = Math.max(styled.alphaTest, 0.025);
-    }
+    styled.transparent = true;
+    styled.depthWrite = false;
+    styled.alphaTest = 0.0;
 
     return styled;
 }

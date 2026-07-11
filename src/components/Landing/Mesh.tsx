@@ -31,13 +31,21 @@ function styleScene(scene: THREE.Group, uniforms: AsciiUniforms) {
     return styledScene;
 }
 
-export default function Mesh() {
+interface MeshProps {
+    opacity?: number;
+}
+
+export default function Mesh({ opacity = 0.5 }: MeshProps) {
     const group = useRef<THREE.Group>(null);
     const uniforms = useMemo(() => createAsciiUniforms(), []);
 
     const { scene, animations } = useGLTF(MODEL_PATH);
     const styledScene = useMemo(() => styleScene(scene, uniforms), [scene, uniforms]);
     const { actions } = useAnimations(animations, group);
+
+    useEffect(() => {
+        uniforms.uOpacity.value = opacity;
+    }, [opacity, uniforms]);
 
     useEffect(() => {
         const playingActions = animations
